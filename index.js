@@ -1,8 +1,14 @@
-var http = require('http');
+var express = require('express');
+var app = express();
 
-http.createServer(function (req, res) {
-    res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('Hello, World!\n')
-}).listen(8000);
+app.set('port', (process.env.PORT || 5000));
 
-console.log('Server started');
+app.use(express.static(__dirname + '/public'));
+
+app.get('/', function(request, response) {
+  response.render('pages/index');
+});
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
